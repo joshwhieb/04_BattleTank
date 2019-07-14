@@ -13,6 +13,10 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+{
+	Barrel = BarrelToSet;
+}
 
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
@@ -32,3 +36,9 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
+
+void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed) 
+{
+	//UE_LOG(LogTemp, Warning, TEXT("TEST?"));
+	UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LaunchSpeed);
+}
