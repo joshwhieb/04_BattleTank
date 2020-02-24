@@ -5,9 +5,9 @@
 
 
 void UTankTrack::SetThrottle(float Throttle) {
+//	auto name = GetName();
+//	UE_LOG(LogTemp, Warning, TEXT("%s Intend move right throw: %f"), *name, Throttle);
 	
-
-	// TODO clamp actual throttle value so player can't go too fast.
 	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
