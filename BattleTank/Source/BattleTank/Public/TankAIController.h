@@ -8,6 +8,7 @@
 
 // forward declarations
 class ATank;
+class UTankAimingComponent;
 
 /**
  * 
@@ -18,6 +19,8 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 	
 private:
+	UTankAimingComponent* TankAimingComponent = nullptr;
+	
 	ATank* GetControlledTank() const;
 	virtual void BeginPlay() override;
 	ATank* GetPlayerTank() const;

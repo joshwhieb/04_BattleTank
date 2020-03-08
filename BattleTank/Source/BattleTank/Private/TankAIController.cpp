@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAIController.h"
+#include "TankAimingComponent.h"
 #include "Tank.h"
 
 void ATankAIController::BeginPlay()
@@ -15,6 +16,12 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AIController found player %s"), *(PlayerTank->GetName()));
 	}
+
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) {
+		return;
+	}
+	TankAimingComponent = AimingComponent;
 }
 
 ATank* ATankAIController::GetPlayerTank() const
@@ -26,7 +33,8 @@ ATank* ATankAIController::GetPlayerTank() const
 
 ATank* ATankAIController::GetControlledTank() const
 {
-	return Cast<ATank>(GetPawn());
+	auto playerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+	return Cast<ATank>(playerPawn);
 }
 
 void ATankAIController::Tick(float DeltaTime)
@@ -44,7 +52,7 @@ void ATankAIController::Tick(float DeltaTime)
 		MoveToActor(PlayerTank, AcceptanceRadius); // TODO check radius is in centimeters
 
 		// aim towards player
-		Cast<ATank>(GetPawn())->AimAt(PlayerTank->GetActorLocation());
+		TankAimingComponent->AimAt(PlayerTank->GetActorLocation());
 
 		// fire if ready
 		ControlledTank->Fire();
