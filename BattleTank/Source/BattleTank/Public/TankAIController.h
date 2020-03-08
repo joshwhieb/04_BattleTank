@@ -7,7 +7,6 @@
 #include "TankAIController.generated.h"
 
 // forward declarations
-class ATank;
 class UTankAimingComponent;
 
 /**
@@ -21,9 +20,7 @@ class BATTLETANK_API ATankAIController : public AAIController
 private:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 	
-	ATank* GetControlledTank() const;
 	virtual void BeginPlay() override;
-	ATank* GetPlayerTank() const;
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

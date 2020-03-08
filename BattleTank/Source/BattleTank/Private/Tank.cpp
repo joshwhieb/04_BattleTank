@@ -1,9 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
-#include "TankBarrel.h"
-#include "TankTurret.h"
-#include "Projectile.h"
+
 
 // Sets default values
 ATank::ATank()
@@ -16,25 +14,4 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Barrel = FindComponentByClass<UTankBarrel>();
-}
-
-void ATank::Fire()
-{
-	if (!ensure(Barrel)) { return; }
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (isReloaded) { 
-		// Spawn a projectile at the end of the barrel
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-			);
-
-		// TODO move into variable
-		Projectile->LaunchProjectile(4000);
-		LastFireTime = FPlatformTime::Seconds();
-	}
 }
