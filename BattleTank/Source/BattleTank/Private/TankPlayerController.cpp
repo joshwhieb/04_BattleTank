@@ -26,10 +26,9 @@ void ATankPlayerController::BeginPlay()
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!ensure(TankAimingComponent))
-	{
-		return;
-	}
+	if (!GetPawn()) { return; }  // e.g. if not possessing.
+	
+	if (!ensure(TankAimingComponent)){return;}
 
 	FVector HitLocation; // out parameter
 	if (GetSightRayHitLocation(HitLocation)) // has side-effect is going to line trace.
