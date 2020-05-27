@@ -31,7 +31,9 @@ void ATankPlayerController::AimTowardsCrosshair()
 	if (!ensure(TankAimingComponent)){return;}
 
 	FVector HitLocation; // out parameter
-	if (GetSightRayHitLocation(HitLocation)) // has side-effect is going to line trace.
+	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
+	UE_LOG(LogTemp, Warning, TEXT("bGotHitLocation: %i"), bGotHitLocation)
+	if (bGotHitLocation) // has side-effect is going to line trace.
 	{
 		TankAimingComponent->AimAt(HitLocation);
 	}
@@ -51,11 +53,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		// line trace along that direction and see what we hit up to a maximum range.
-		bool test;
-		test = GetLookVectorHitLocation(LookDirection, HitLocation);
+		return GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 
-	return true;
+	return false;
 }
 
 // Use LineTraceSingleByChannel for tracing look direction vector to intersection to earth
