@@ -27,14 +27,19 @@ void UTankAimingComponent::BeginPlay() {
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) {
-		FiringState = EFiringState::Reloading;
-	}
-	else if (IsBarrelMoving()) {
-		FiringState = EFiringState::Aiming;
+	if (Ammo == 0) {
+		FiringState = EFiringState::OutOfAmmo;
 	}
 	else {
-		FiringState = EFiringState::Locked;
+		if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) {
+			FiringState = EFiringState::Reloading;
+		}
+		else if (IsBarrelMoving()) {
+			FiringState = EFiringState::Aiming;
+		}
+		else {
+			FiringState = EFiringState::Locked;
+		}
 	}
 }
 
@@ -115,7 +120,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 void UTankAimingComponent::Fire()
 {
 	
-	if (FiringState != EFiringState::Reloading) {
+	if (FiringState != EFiringState::Reloading && Ammo > 0) {
 		// Spawn a projectile at the end of the barrel
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) {return;}
@@ -128,6 +133,7 @@ void UTankAimingComponent::Fire()
 		// TODO move into variable
 		Projectile->LaunchProjectile(4000);
 		LastFireTime = FPlatformTime::Seconds();
+		Ammo -= 1;
 	}
 }
 
