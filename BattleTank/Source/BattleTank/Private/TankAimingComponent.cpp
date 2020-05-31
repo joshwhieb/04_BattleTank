@@ -131,7 +131,7 @@ void UTankAimingComponent::Fire()
 			);
 
 		// TODO move into variable
-		Projectile->LaunchProjectile(4000);
+		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 		Ammo -= 1;
 	}
