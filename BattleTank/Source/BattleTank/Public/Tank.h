@@ -16,10 +16,15 @@ public:
 	// called by engine when actor damage is dealt.	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
+	// Return current health as a percentage of starting health.
+	UFUNCTION(BlueprintPure, Category = "Health")
+	float GetHealthPercent() const;
+
+private:
+
 	// Sets default values for this pawn's properties
 	ATank();
 
-private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth = 100;
 	
