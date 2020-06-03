@@ -68,7 +68,7 @@ private:
 	void MoveBarrelTowards(FVector AimDirection);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int Ammo = 3;
+	int Ammo = 12;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ReloadTimeInSeconds = 3;
